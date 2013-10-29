@@ -32,6 +32,7 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             try
             {
                 for (int i = 0; i < client.Total.Count; i++)
