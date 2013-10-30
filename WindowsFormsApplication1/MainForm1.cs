@@ -35,6 +35,7 @@ namespace WindowsFormsApplication1
 
             try
             {
+                client.Total = client.GetUpdatedTotal();
                 for (int i = 0; i < client.Total.Count; i++)
                 {
                         listBox1.Items.Add(client.Total[i].Subject.ToString());
@@ -55,6 +56,7 @@ namespace WindowsFormsApplication1
         }
         void RedmineUpdate()
         {
+            client.Total = client.GetUpdatedTotal();
             for (int i = 0; i < client.Cache.Count; i++)
             {
                 if (client.Total[i].Description != client.Cache[i].Description)

@@ -11,6 +11,8 @@ using Redmine.Net.Api;
 using Redmine.Net.Api.Types;
 using System.Xml;
 using System.Threading;
+using System.Resources;
+using System.Reflection;
 
 namespace WindowsFormsApplication1
 {
@@ -18,6 +20,7 @@ namespace WindowsFormsApplication1
     {
         public LoginForm()
         {
+            //System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("ru-RU");
             InitializeComponent();
         }
 
@@ -29,7 +32,18 @@ namespace WindowsFormsApplication1
         }
         private void LoginForm_Load(object sender, EventArgs e)
         {
-
+            ResourceManager LocRM = new ResourceManager("RedmineUpdateMain.RedmineClientStrings", GetType().Assembly);
+            label1.Text = LocRM.GetString("LoginLabel");
+            label2.Text = LocRM.GetString("PasswordLabel");
+            label3.Text = LocRM.GetString("HostLabel");
+            TitleLabel.Text = LocRM.GetString("TitleLabel");
+            button1.Text = LocRM.GetString("LoginButton");
+            /*Assembly ass = Assembly.GetExecutingAssembly();
+            String[] a = ass.GetManifestResourceNames();
+            for (int i = 0; i < a.Count<String>(); i++)
+            {
+                listBox1.Items.Add(a[i].ToString());
+            }*/ //Важный код на проверку пространства имен для resources
         }
     }
 }
