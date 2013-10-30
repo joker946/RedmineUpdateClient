@@ -61,29 +61,29 @@ namespace WindowsFormsApplication1
             {
                 if (client.Total[i].Description != client.Cache[i].Description)
                 {
-                    notifyIcon1.BalloonTipTitle = "New changes in " + client.Total[i].Project.Name;
-                    notifyIcon1.BalloonTipText = "New changes in Description: " + client.Total[i].Description;
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
+                    notifyIcon1.BalloonTipText = String.Format("New changes in Description: {0}", client.Total[i].Description);
                     notifyIcon1.ShowBalloonTip(30);
                     client.Cache[i].Description = client.Total[i].Description;
                 }
                 if (client.Total[i].Subject != client.Cache[i].Subject)
                 {
-                    notifyIcon1.BalloonTipTitle = "New changes in " + client.Total[i].Project.Name;
-                    notifyIcon1.BalloonTipText = "New changes in Subject: " + client.Total[i].Subject;
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
+                    notifyIcon1.BalloonTipText = String.Format("New changes in Subject: {0}", client.Total[i].Subject);
                     notifyIcon1.ShowBalloonTip(30);
                     client.Cache[i].Subject = client.Total[i].Subject;
                 }
                 if (client.Total[i].Status.Name != client.Cache[i].Status.Name)
                 {
-                    notifyIcon1.BalloonTipTitle = "New changes in Issue " + client.Total[i].Subject;
-                    notifyIcon1.BalloonTipText = "Status has been changed from " + client.Cache[i].Status.Name + " to " + client.Total[i].Status.Name;
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format("Status has been changed from {0} to {1}", client.Cache[i].Status.Name, client.Total[i].Status.Name);
                     notifyIcon1.ShowBalloonTip(30);
                     client.Cache[i].Status.Name = client.Total[i].Status.Name;
                 }
                 if (client.Total[i].Priority.Name != client.Cache[i].Priority.Name)
                 {
-                    notifyIcon1.BalloonTipTitle = "New changes in Issue " + client.Total[i].Subject;
-                    notifyIcon1.BalloonTipText = "Priority has been changed from " + client.Cache[i].Priority.Name + " to " + client.Total[i].Priority.Name;
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format("Priority has been changed from {0} to {1}", client.Cache[i].Priority.Name, client.Total[i].Priority.Name);
                     notifyIcon1.ShowBalloonTip(30);
                     client.Cache[i].Priority.Name = client.Total[i].Priority.Name;
                 }
