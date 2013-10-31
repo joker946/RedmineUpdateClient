@@ -40,13 +40,13 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.RUpdateIssue = new System.ComponentModel.BackgroundWorker();
+            this.RLogin = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // timer1
             // 
-            this.timer1.Enabled = true;
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
@@ -115,13 +115,18 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(73, 17);
+            this.toolStripStatusLabel1.Text = "Logging in...";
             // 
             // RUpdateIssue
             // 
-            this.RUpdateIssue.DoWork += new System.ComponentModel.DoWorkEventHandler(this.OnWork);
-            this.RUpdateIssue.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.OnComplete);
+            this.RUpdateIssue.DoWork += new System.ComponentModel.DoWorkEventHandler(this.RUpdateIssue_OnWork);
+            this.RUpdateIssue.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.RUpdateIssue_OnComplete);
+            // 
+            // RLogin
+            // 
+            this.RLogin.DoWork += new System.ComponentModel.DoWorkEventHandler(this.RLogin_DoWork);
+            this.RLogin.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.RLogin_RunWorkerCompleted);
             // 
             // MainForm1
             // 
@@ -158,6 +163,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.ComponentModel.BackgroundWorker RUpdateIssue;
+        private System.ComponentModel.BackgroundWorker RLogin;
     }
 }
 

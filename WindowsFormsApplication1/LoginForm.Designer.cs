@@ -37,6 +37,7 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.TitleLabel = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button1
@@ -81,10 +82,18 @@
             resources.ApplyResources(this.TitleLabel, "TitleLabel");
             this.TitleLabel.Name = "TitleLabel";
             // 
+            // checkBox1
+            // 
+            resources.ApplyResources(this.checkBox1, "checkBox1");
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // LoginForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.TitleLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox3);
@@ -110,5 +119,6 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label TitleLabel;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

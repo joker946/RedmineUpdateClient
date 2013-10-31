@@ -20,8 +20,10 @@ namespace WindowsFormsApplication1
     {
         public LoginForm()
         {
+            
             //System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("ru-RU");
             InitializeComponent();
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -44,6 +46,18 @@ namespace WindowsFormsApplication1
             {
                 listBox1.Items.Add(a[i].ToString());
             }*/ //Важный код на проверку пространства имен для resources
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                textBox3.Enabled = true;
+            }
+            else
+            {
+                textBox3.Enabled = false;
+            }
         }
     }
 }

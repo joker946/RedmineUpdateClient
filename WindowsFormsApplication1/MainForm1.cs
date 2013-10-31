@@ -17,6 +17,18 @@ using System.Diagnostics;
 
 namespace WindowsFormsApplication1
 {
+    public struct teststruct
+    {
+        public string login;
+        public string password;
+        public string host;
+        public teststruct(string l, string p, string h)
+        {
+            login = l;
+            password = p;
+            host = h;
+        }
+    }
     public partial class MainForm1 : Form
     {
         Client client;
@@ -24,29 +36,14 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
         }
-        public MainForm1(string _login, string _password, string _host)
+        public MainForm1(string login, string password, string host)
         {
             InitializeComponent();
-            client = new Client(_login, _password, _host);
+            RLogin.RunWorkerAsync(new teststruct(login,password,host));
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            try
-            {
-                client.Total = client.GetUpdatedTotal();
-                for (int i = 0; i < client.Total.Count; i++)
-                {
-                        listBox1.Items.Add(client.Total[i].Subject.ToString());
-                }
-                toolStripStatusLabel1.Text = "You are logged in as " + client.User.FirstName + ' ' + client.User.LastName;
-            }
-            catch
-            {
-                MessageBox.Show("Не удалось подключиться");
-                Application.Exit();
-            }
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -70,13 +67,13 @@ namespace WindowsFormsApplication1
             
         }
 
-        private void OnWork(object sender, DoWorkEventArgs e)
+        private void RUpdateIssue_OnWork(object sender, DoWorkEventArgs e)
         {
             client.Total = client.GetUpdatedTotal();
 
         }
 
-        private void OnComplete(object sender, RunWorkerCompletedEventArgs e)
+        private void RUpdateIssue_OnComplete(object sender, RunWorkerCompletedEventArgs e)
         {
             listBox1.Items.Clear();
             for (int i = 0; i < client.Total.Count; i++)
@@ -111,6 +108,19 @@ namespace WindowsFormsApplication1
                 }
             }
             client.Cache = client.Total;
+        }
+
+        private void RLogin_DoWork(object sender, DoWorkEventArgs e)
+        {
+            teststruct t = (teststruct)e.Argument;
+            e.Result = t.login;
+            client = new Client(t.login,t.password,t.host);
+        }
+
+        private void RLogin_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            toolStripStatusLabel1.Text = "You are logged in as " + client.User.FirstName + ' ' + client.User.LastName;
+            timer1.Enabled = true;
         }
     }
 }
