@@ -39,7 +39,6 @@ namespace WindowsFormsApplication1
                 for (int i = 0; i < client.Total.Count; i++)
                 {
                         listBox1.Items.Add(client.Total[i].Subject.ToString());
-                        
                 }
                 toolStripStatusLabel1.Text = "You are logged in as " + client.User.FirstName + ' ' + client.User.LastName;
             }
@@ -51,44 +50,9 @@ namespace WindowsFormsApplication1
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Thread t = new Thread(RedmineUpdate);
-            t.Start();
+            RUpdateIssue.RunWorkerAsync();
         }
-        void RedmineUpdate()
-        {
-            client.Total = client.GetUpdatedTotal();
-            for (int i = 0; i < client.Cache.Count; i++)
-            {
-                if (client.Total[i].Description != client.Cache[i].Description)
-                {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
-                    notifyIcon1.BalloonTipText = String.Format("New changes in Description: {0}", client.Total[i].Description);
-                    notifyIcon1.ShowBalloonTip(30);
-                    client.Cache[i].Description = client.Total[i].Description;
-                }
-                if (client.Total[i].Subject != client.Cache[i].Subject)
-                {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
-                    notifyIcon1.BalloonTipText = String.Format("New changes in Subject: {0}", client.Total[i].Subject);
-                    notifyIcon1.ShowBalloonTip(30);
-                    client.Cache[i].Subject = client.Total[i].Subject;
-                }
-                if (client.Total[i].Status.Name != client.Cache[i].Status.Name)
-                {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format("Status has been changed from {0} to {1}", client.Cache[i].Status.Name, client.Total[i].Status.Name);
-                    notifyIcon1.ShowBalloonTip(30);
-                    client.Cache[i].Status.Name = client.Total[i].Status.Name;
-                }
-                if (client.Total[i].Priority.Name != client.Cache[i].Priority.Name)
-                {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format("Priority has been changed from {0} to {1}", client.Cache[i].Priority.Name, client.Total[i].Priority.Name);
-                    notifyIcon1.ShowBalloonTip(30);
-                    client.Cache[i].Priority.Name = client.Total[i].Priority.Name;
-                }
-            }
-        }
+        
         private void MainForm1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
@@ -108,12 +72,45 @@ namespace WindowsFormsApplication1
 
         private void OnWork(object sender, DoWorkEventArgs e)
         {
+            client.Total = client.GetUpdatedTotal();
 
         }
 
         private void OnComplete(object sender, RunWorkerCompletedEventArgs e)
         {
-
+            listBox1.Items.Clear();
+            for (int i = 0; i < client.Total.Count; i++)
+            {
+                listBox1.Items.Add(client.Total[i].Subject.ToString());
+            }
+            for (int i = 0; i < client.Cache.Count; i++)
+            {
+                if (client.Total[i].Description != client.Cache[i].Description)
+                {
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
+                    notifyIcon1.BalloonTipText = String.Format("New changes in Description: {0}", client.Total[i].Description);
+                    notifyIcon1.ShowBalloonTip(30);
+                }
+                if (client.Total[i].Subject != client.Cache[i].Subject)
+                {
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
+                    notifyIcon1.BalloonTipText = String.Format("New changes in Subject: {0}", client.Total[i].Subject);
+                    notifyIcon1.ShowBalloonTip(30);
+                }
+                if (client.Total[i].Status.Name != client.Cache[i].Status.Name)
+                {
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format("Status has been changed from {0} to {1}", client.Cache[i].Status.Name, client.Total[i].Status.Name);
+                    notifyIcon1.ShowBalloonTip(30);
+                }
+                if (client.Total[i].Priority.Name != client.Cache[i].Priority.Name)
+                {
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format("Priority has been changed from {0} to {1}", client.Cache[i].Priority.Name, client.Total[i].Priority.Name);
+                    notifyIcon1.ShowBalloonTip(30);
+                }
+            }
+            client.Cache = client.Total;
         }
     }
 }
