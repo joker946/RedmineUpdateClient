@@ -106,6 +106,18 @@ namespace WindowsFormsApplication1
                     notifyIcon1.BalloonTipText = String.Format("Priority has been changed from {0} to {1}", client.Cache[i].Priority.Name, client.Total[i].Priority.Name);
                     notifyIcon1.ShowBalloonTip(30);
                 }
+                if (client.Total[i].Tracker.Name != client.Cache[i].Tracker.Name)
+                {
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format("Tracker has been changed from {0} to {1}", client.Cache[i].Tracker.Name, client.Total[i].Tracker.Name);
+                    notifyIcon1.ShowBalloonTip(30);
+                }
+                if (client.Total[i].DoneRatio.Value != client.Cache[i].DoneRatio.Value)
+                {
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format("Done Ratio has been changed from {0}% to {1}%", client.Cache[i].DoneRatio.Value, client.Total[i].DoneRatio.Value);
+                    notifyIcon1.ShowBalloonTip(30);
+                }
             }
             client.Cache = client.Total;
         }
@@ -120,6 +132,7 @@ namespace WindowsFormsApplication1
         private void RLogin_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolStripStatusLabel1.Text = "You are logged in as " + client.User.FirstName + ' ' + client.User.LastName;
+            RUpdateIssue.RunWorkerAsync();
             timer1.Enabled = true;
         }
     }
