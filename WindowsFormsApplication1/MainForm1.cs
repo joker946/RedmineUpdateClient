@@ -81,6 +81,13 @@ namespace WindowsFormsApplication1
             }
             for (int i = 0; i < client.Cache.Count; i++)
             {
+                if (client.Total[i].Id != client.Cache[i].Id)
+                {
+                    notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
+                    notifyIcon1.BalloonTipText = String.Format("New issue has been added: {0}", client.Total[i].Subject);
+                    notifyIcon1.ShowBalloonTip(30);
+                    continue;
+                }
                 if (client.Total[i].Description != client.Cache[i].Description)
                 {
                     notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
@@ -90,7 +97,7 @@ namespace WindowsFormsApplication1
                 if (client.Total[i].Subject != client.Cache[i].Subject)
                 {
                     notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
-                    notifyIcon1.BalloonTipText = String.Format("New changes in Subject: {0}", client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format("Subject has been changed from: {0} to {1}", client.Cache[i].Subject , client.Total[i].Subject);
                     notifyIcon1.ShowBalloonTip(30);
                 }
                 if (client.Total[i].Status.Name != client.Cache[i].Status.Name)
