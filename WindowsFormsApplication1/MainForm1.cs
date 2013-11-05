@@ -55,7 +55,6 @@ namespace WindowsFormsApplication1
             Application.Exit();
         }
 
-
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsForm s = new SettingsForm();
@@ -124,16 +123,30 @@ namespace WindowsFormsApplication1
 
         private void RLogin_DoWork(object sender, DoWorkEventArgs e)
         {
-            teststruct t = (teststruct)e.Argument;
-            e.Result = t.login;
-            client = new Client(t.login,t.password,t.host);
+            try
+            {
+                teststruct t = (teststruct)e.Argument;
+                client = new Client(t.login, t.password, t.host);
+            }
+            catch
+            {
+                e.Result = "InvalidLogin";
+            }
         }
 
         private void RLogin_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            toolStripStatusLabel1.Text = "You are logged in as " + client.User.FirstName + ' ' + client.User.LastName;
-            RUpdateIssue.RunWorkerAsync();
-            timer1.Enabled = true;
+            if (e.Result == "InvalidLogin")
+            {
+                MessageBox.Show("Ошибка при подключении");
+                Application.Restart();
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = "You are logged in as " + client.User.FirstName + ' ' + client.User.LastName;
+                RUpdateIssue.RunWorkerAsync();
+                timer1.Enabled = true;
+            }
         }
     }
 }

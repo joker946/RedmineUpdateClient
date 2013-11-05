@@ -10,7 +10,6 @@ using Redmine.Net.Api.Types;
 using System.Xml;
 using System.Threading;
 using System.Diagnostics;
-
 namespace WindowsFormsApplication1
 {
     class Client
@@ -33,10 +32,10 @@ namespace WindowsFormsApplication1
         }
         public IList<Issue> GetUpdatedTotal()
         {
-            user = manager.GetCurrentUser();
-            var par = new NameValueCollection { { "assigned_to_id", user.Id.ToString() } };//set filter for Issues
-            var total = manager.GetTotalObjectList<Issue>(par);
-            return total;
+                user = manager.GetCurrentUser();
+                var par = new NameValueCollection { { "assigned_to_id", user.Id.ToString() } };//set filter for Issues
+                var total = manager.GetTotalObjectList<Issue>(par);
+                return total;
         }
         public IList<Issue> Cache
         {
