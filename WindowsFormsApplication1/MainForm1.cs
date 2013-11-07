@@ -13,7 +13,7 @@ using Redmine.Net.Api.Types;
 using System.Xml;
 using System.Threading;
 using System.Diagnostics;
-
+using System.Resources;
 
 namespace WindowsFormsApplication1
 {
@@ -32,6 +32,7 @@ namespace WindowsFormsApplication1
     public partial class MainForm1 : Form
     {
         Client client;
+        ResourceManager LocRM;
         public MainForm1()
         {
             InitializeComponent();
@@ -40,10 +41,12 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
             RLogin.RunWorkerAsync(new teststruct(login,password,host));
+            LocRM = new ResourceManager("RedmineUpdateMain.RedmineClientMFStrings", GetType().Assembly);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -83,45 +86,45 @@ namespace WindowsFormsApplication1
             {
                 if (client.Total[i].Id != client.Cache[i].Id)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
-                    notifyIcon1.BalloonTipText = String.Format("New issue has been added: {0}", client.Total[i].Subject);
+                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinProj"), client.Total[i].Project.Name);
+                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFAddedIssue"), client.Total[i].Subject);
                     notifyIcon1.ShowBalloonTip(30);
                     continue;
                 }
                 if (client.Total[i].Description != client.Cache[i].Description)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
-                    notifyIcon1.BalloonTipText = String.Format("New changes in Description: {0}", client.Total[i].Description);
+                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCDisc"), client.Total[i].Description);
                     notifyIcon1.ShowBalloonTip(30);
                 }
                 if (client.Total[i].Subject != client.Cache[i].Subject)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in {0}", client.Total[i].Project.Name);
-                    notifyIcon1.BalloonTipText = String.Format("Subject has been changed from: {0} to {1}", client.Cache[i].Subject , client.Total[i].Subject);
+                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCSubj"), client.Cache[i].Subject, client.Total[i].Subject);
                     notifyIcon1.ShowBalloonTip(30);
                 }
                 if (client.Total[i].Status.Name != client.Cache[i].Status.Name)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format("Status has been changed from {0} to {1}", client.Cache[i].Status.Name, client.Total[i].Status.Name);
+                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCStat"), client.Cache[i].Status.Name, client.Total[i].Status.Name);
                     notifyIcon1.ShowBalloonTip(30);
                 }
                 if (client.Total[i].Priority.Name != client.Cache[i].Priority.Name)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format("Priority has been changed from {0} to {1}", client.Cache[i].Priority.Name, client.Total[i].Priority.Name);
+                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCPrior"), client.Cache[i].Priority.Name, client.Total[i].Priority.Name);
                     notifyIcon1.ShowBalloonTip(30);
                 }
                 if (client.Total[i].Tracker.Name != client.Cache[i].Tracker.Name)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format("Tracker has been changed from {0} to {1}", client.Cache[i].Tracker.Name, client.Total[i].Tracker.Name);
+                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCTrck"), client.Cache[i].Tracker.Name, client.Total[i].Tracker.Name);
                     notifyIcon1.ShowBalloonTip(30);
                 }
                 if (client.Total[i].DoneRatio.Value != client.Cache[i].DoneRatio.Value)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format("New changes in Issue {0}", client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format("Done Ratio has been changed from {0}% to {1}%", client.Cache[i].DoneRatio.Value, client.Total[i].DoneRatio.Value);
+                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
+                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCRatio"), client.Cache[i].DoneRatio.Value, client.Total[i].DoneRatio.Value);
                     notifyIcon1.ShowBalloonTip(30);
                 }
             }
@@ -143,14 +146,15 @@ namespace WindowsFormsApplication1
 
         private void RLogin_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+
             if (e.Result == "InvalidLogin")
             {
-                MessageBox.Show("Ошибка при подключении");
+                MessageBox.Show(LocRM.GetString("MFConnError"));
                 Application.Restart();
             }
             else
             {
-                toolStripStatusLabel1.Text = "You are logged in as " + client.User.FirstName + ' ' + client.User.LastName;
+                toolStripStatusLabel1.Text = String.Format(LocRM.GetString("MFLogInfo"), client.User.FirstName, client.User.LastName);
                 RUpdateIssue.RunWorkerAsync();
                 timer1.Enabled = true;
             }
