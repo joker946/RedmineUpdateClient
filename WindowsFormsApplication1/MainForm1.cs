@@ -66,7 +66,6 @@ namespace WindowsFormsApplication1
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            
         }
 
         private void RUpdateIssue_OnWork(object sender, DoWorkEventArgs e)
@@ -74,7 +73,13 @@ namespace WindowsFormsApplication1
             client.Total = client.GetUpdatedTotal();
 
         }
-
+        void ShowIcon(String title, String text)
+        {
+            notifyIcon1.BalloonTipTitle = title;
+            notifyIcon1.BalloonTipText = text;
+            notifyIcon1.ShowBalloonTip(30);
+            listBox2.Items.Add(text);
+        }
         private void RUpdateIssue_OnComplete(object sender, RunWorkerCompletedEventArgs e)
         {
             listBox1.Items.Clear();
@@ -86,46 +91,39 @@ namespace WindowsFormsApplication1
             {
                 if (client.Total[i].Id != client.Cache[i].Id)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinProj"), client.Total[i].Project.Name);
-                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFAddedIssue"), client.Total[i].Subject);
-                    notifyIcon1.ShowBalloonTip(30);
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinProj"), client.Total[i].Project.Name), 
+                        String.Format(LocRM.GetString("MFAddedIssue"), client.Total[i].Subject));
                     continue;
                 }
                 if (client.Total[i].Description != client.Cache[i].Description)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCDisc"), client.Total[i].Description);
-                    notifyIcon1.ShowBalloonTip(30);
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject), 
+                        String.Format(LocRM.GetString("MFCDisc"), client.Total[i].Description));
                 }
                 if (client.Total[i].Subject != client.Cache[i].Subject)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCSubj"), client.Cache[i].Subject, client.Total[i].Subject);
-                    notifyIcon1.ShowBalloonTip(30);
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject), 
+                        String.Format(LocRM.GetString("MFCSubj"), client.Cache[i].Subject, client.Total[i].Subject));
                 }
                 if (client.Total[i].Status.Name != client.Cache[i].Status.Name)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCStat"), client.Cache[i].Status.Name, client.Total[i].Status.Name);
-                    notifyIcon1.ShowBalloonTip(30);
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject), 
+                        String.Format(LocRM.GetString("MFCStat"), client.Cache[i].Status.Name, client.Total[i].Status.Name));
                 }
                 if (client.Total[i].Priority.Name != client.Cache[i].Priority.Name)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCPrior"), client.Cache[i].Priority.Name, client.Total[i].Priority.Name);
-                    notifyIcon1.ShowBalloonTip(30);
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject),
+                        String.Format(LocRM.GetString("MFCPrior"), client.Cache[i].Priority.Name, client.Total[i].Priority.Name));
                 }
                 if (client.Total[i].Tracker.Name != client.Cache[i].Tracker.Name)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCTrck"), client.Cache[i].Tracker.Name, client.Total[i].Tracker.Name);
-                    notifyIcon1.ShowBalloonTip(30);
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject),
+                        String.Format(LocRM.GetString("MFCTrck"), client.Cache[i].Tracker.Name, client.Total[i].Tracker.Name));
                 }
                 if (client.Total[i].DoneRatio.Value != client.Cache[i].DoneRatio.Value)
                 {
-                    notifyIcon1.BalloonTipTitle = String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject);
-                    notifyIcon1.BalloonTipText = String.Format(LocRM.GetString("MFCRatio"), client.Cache[i].DoneRatio.Value, client.Total[i].DoneRatio.Value);
-                    notifyIcon1.ShowBalloonTip(30);
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject),
+                        String.Format(LocRM.GetString("MFCRatio"), client.Cache[i].DoneRatio.Value, client.Total[i].DoneRatio.Value));
                 }
             }
             client.Cache = client.Total;
@@ -158,6 +156,12 @@ namespace WindowsFormsApplication1
                 RUpdateIssue.RunWorkerAsync();
                 timer1.Enabled = true;
             }
+        }
+
+        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
+        {
+            String target = "http://www.dkiredmine.bitnamiapp.com";
+            System.Diagnostics.Process.Start(target);
         }
     }
 }
