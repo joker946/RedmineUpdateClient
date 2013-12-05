@@ -32,6 +32,8 @@ namespace WindowsFormsApplication1
     public partial class MainForm1 : Form
     {
         Client client;
+        int countofissues;
+        int selectedItem;
         ResourceManager LocRM;
         public MainForm1()
         {
@@ -42,6 +44,8 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             RLogin.RunWorkerAsync(new teststruct(login,password,host));
             LocRM = new ResourceManager("RedmineUpdateMain.RedmineClientMFStrings", GetType().Assembly);
+            countofissues = 0;
+            selectedItem = 0;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -67,18 +71,17 @@ namespace WindowsFormsApplication1
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
         }
-
-        private void RUpdateIssue_OnWork(object sender, DoWorkEventArgs e)
-        {
-            client.Total = client.GetUpdatedTotal();
-
-        }
         void ShowIcon(String title, String text)
         {
             notifyIcon1.BalloonTipTitle = title;
             notifyIcon1.BalloonTipText = text;
             notifyIcon1.ShowBalloonTip(30);
             listBox2.Items.Add(text);
+        }
+        private void RUpdateIssue_OnWork(object sender, DoWorkEventArgs e)
+        {
+            client.Total = client.GetUpdatedTotal();
+
         }
         private void RUpdateIssue_OnComplete(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -88,7 +91,20 @@ namespace WindowsFormsApplication1
             {
                 checkedListBox1.Items.Add(client.Total[i].Subject.ToString());
             }
-
+            if (countofissues == 0)
+            {
+                checkedListBox1.SetSelected(selectedItem, true);
+                countofissues = client.Total.Count;
+            }
+            else if (countofissues < client.Total.Count){
+                int dif = client.Total.Count - countofissues;
+                checkedListBox1.SetSelected(selectedItem + dif, true);
+                countofissues = client.Total.Count;
+            }
+            else if (countofissues == client.Total.Count)
+            {
+                checkedListBox1.SetSelected(selectedItem, true);
+            }
             for (int i = 0; i < client.Cache.Count; i++)
             {
                 if (client.Total[i].Id != client.Cache[i].Id)
@@ -169,6 +185,7 @@ namespace WindowsFormsApplication1
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             richTextBox1.Text = client.Total[checkedListBox1.SelectedIndex].Description.ToString();
+            selectedItem = checkedListBox1.SelectedIndex;
         }
     }
 }
