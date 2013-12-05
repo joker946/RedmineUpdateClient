@@ -111,7 +111,7 @@ namespace WindowsFormsApplication1
                 {
                     ShowIcon(String.Format(LocRM.GetString("MFChangesinProj"), client.Total[i].Project.Name), 
                         String.Format(LocRM.GetString("MFAddedIssue"), client.Total[i].Subject));
-                    continue;
+                    break;
                 }
                 if (client.Total[i].Description != client.Cache[i].Description)
                 {
