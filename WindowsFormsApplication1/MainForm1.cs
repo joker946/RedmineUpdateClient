@@ -82,11 +82,13 @@ namespace WindowsFormsApplication1
         }
         private void RUpdateIssue_OnComplete(object sender, RunWorkerCompletedEventArgs e)
         {
-            listBox1.Items.Clear();
+            checkedListBox1.Items.Clear();
+            
             for (int i = 0; i < client.Total.Count; i++)
             {
-                listBox1.Items.Add(client.Total[i].Subject.ToString());
+                checkedListBox1.Items.Add(client.Total[i].Subject.ToString());
             }
+
             for (int i = 0; i < client.Cache.Count; i++)
             {
                 if (client.Total[i].Id != client.Cache[i].Id)
@@ -162,6 +164,11 @@ namespace WindowsFormsApplication1
         {
             String target = "http://www.dkiredmine.bitnamiapp.com";
             System.Diagnostics.Process.Start(target);
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            richTextBox1.Text = client.Total[checkedListBox1.SelectedIndex].Description.ToString();
         }
     }
 }

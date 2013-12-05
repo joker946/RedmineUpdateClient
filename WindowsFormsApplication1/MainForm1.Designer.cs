@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm1));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -43,6 +42,8 @@
             this.RLogin = new System.ComponentModel.BackgroundWorker();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -51,16 +52,6 @@
             // 
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
-            "Loading..."});
-            this.listBox1.Location = new System.Drawing.Point(23, 95);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(189, 134);
-            this.listBox1.TabIndex = 2;
             // 
             // label1
             // 
@@ -137,30 +128,48 @@
             // 
             this.listBox2.FormattingEnabled = true;
             this.listBox2.HorizontalScrollbar = true;
-            this.listBox2.Location = new System.Drawing.Point(244, 95);
+            this.listBox2.Location = new System.Drawing.Point(427, 95);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(360, 134);
+            this.listBox2.Size = new System.Drawing.Size(176, 134);
             this.listBox2.TabIndex = 6;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(241, 57);
+            this.label2.Location = new System.Drawing.Point(424, 57);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "Recent Updates";
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(23, 95);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(191, 139);
+            this.checkedListBox1.TabIndex = 8;
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(226, 95);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(182, 139);
+            this.richTextBox1.TabIndex = 9;
+            this.richTextBox1.Text = "";
             // 
             // MainForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(636, 416);
+            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm1";
@@ -179,7 +188,6 @@
         #endregion
 
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -191,6 +199,8 @@
         private System.ComponentModel.BackgroundWorker RLogin;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 
