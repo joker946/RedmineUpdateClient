@@ -25,6 +25,7 @@ namespace WindowsFormsApplication1
         IList<Issue> cacheissue;
         IList<Issue> totalissue;
         IList<Project> totalproject;
+        IList<IList<Issue>> projects;
         private static Client _instance;
         public static Client Instance
         {
@@ -42,20 +43,38 @@ namespace WindowsFormsApplication1
             cacheissue = this.GetTotalIssue();
             totalissue = this.GetTotalIssue();
             totalproject = this.GetTotalProject();
+            projects = this.GetProjects();
             _instance = this;
         }
         public IList<Issue> GetTotalIssue()
         {
             user = manager.GetCurrentUser();
-            var par = new NameValueCollection { { "assigned_to_id", user.Id.ToString() } };//set filter for Issues               
+            var par = new NameValueCollection { { "assigned_to_id", user.Id.ToString() } };//set filter for Issues
+            var total = manager.GetTotalObjectList<Issue>(par);
+            return total;
+        }
+        public IList<Issue> GetIssueByProject(int idProject)
+        {
+            user = manager.GetCurrentUser();
+            var par = new NameValueCollection { { "project_id", String.Format("{0}",idProject) } };//set filter for Issues
+            par.Add("assigned_to_id",user.Id.ToString());
             var total = manager.GetTotalObjectList<Issue>(par);
             return total;
         }
         public IList<Project> GetTotalProject()
         {
-            user = manager.GetCurrentUser();
             var total = manager.GetTotalObjectList<Project>(null);
             return total;
+        }
+        public IList<IList<Issue>> GetProjects()
+        {
+            totalproject = this.GetTotalProject();
+            IList<IList<Issue>> temp = new List<IList<Issue>>();
+            for (int i = 0; i < totalproject.Count; i++)
+            {
+                temp.Add(GetIssueByProject(i+1));
+            }
+                return temp;
         }
         public IList<Issue> CacheIssue
         {
@@ -71,6 +90,11 @@ namespace WindowsFormsApplication1
         {
             get { return totalproject; }
             set { totalproject = value; }
+        }
+        public IList<IList<Issue>> Project
+        {
+            get { return projects; }
+            set { projects = value; }
         }
         public User User
         {

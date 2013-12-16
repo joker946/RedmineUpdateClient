@@ -15,23 +15,9 @@ namespace WindowsFormsApplication1
         public SettingsForm()
         {
             InitializeComponent();
-            for (int i = 0; i < Client.Instance.TotalProject.Count; i++)
-            {
-                ProjectListBox.Items.Add(Client.Instance.TotalProject[i].Name);
-            }
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void SettingsForm_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (LanguageBox.SelectedIndex)
             {
@@ -43,6 +29,7 @@ namespace WindowsFormsApplication1
                     break;
             }
             RedmineUpdateMain.Properties.Settings.Default.Save();
+            MessageBox.Show("You have to restart application to accept new changes");
         }
     }
 }

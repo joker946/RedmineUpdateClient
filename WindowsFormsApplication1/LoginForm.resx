@@ -126,7 +126,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="button1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="button1.Text" xml:space="preserve">
     <value>Log in</value>
@@ -333,7 +333,7 @@
     <value>69, 17</value>
   </data>
   <data name="checkBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>4</value>
   </data>
   <data name="checkBox1.Text" xml:space="preserve">
     <value>Edit Host</value>

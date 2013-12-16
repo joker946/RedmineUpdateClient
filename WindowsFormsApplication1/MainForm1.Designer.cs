@@ -42,22 +42,24 @@
             this.RLogin = new System.ComponentModel.BackgroundWorker();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.IssueListBox = new System.Windows.Forms.CheckedListBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.ProjectListBox = new System.Windows.Forms.ListBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // timer1
             // 
-            this.timer1.Interval = 15000;
+            this.timer1.Interval = 10000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 57);
+            this.label1.Location = new System.Drawing.Point(220, 51);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 13);
             this.label1.TabIndex = 3;
@@ -72,7 +74,6 @@
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
-            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // menuStrip1
             // 
@@ -129,54 +130,74 @@
             // 
             this.listBox2.FormattingEnabled = true;
             this.listBox2.HorizontalScrollbar = true;
-            this.listBox2.Location = new System.Drawing.Point(427, 95);
+            this.listBox2.Location = new System.Drawing.Point(420, 89);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(176, 134);
+            this.listBox2.Size = new System.Drawing.Size(196, 303);
             this.listBox2.TabIndex = 6;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(424, 57);
+            this.label2.Location = new System.Drawing.Point(417, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "Recent Updates";
             // 
-            // checkedListBox1
+            // IssueListBox
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(23, 95);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(191, 139);
-            this.checkedListBox1.TabIndex = 8;
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            this.IssueListBox.FormattingEnabled = true;
+            this.IssueListBox.Location = new System.Drawing.Point(223, 89);
+            this.IssueListBox.Name = "IssueListBox";
+            this.IssueListBox.Size = new System.Drawing.Size(191, 139);
+            this.IssueListBox.TabIndex = 8;
+            this.IssueListBox.SelectedIndexChanged += new System.EventHandler(this.IssueListBox1_SelectedIndexChanged);
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(226, 95);
+            this.richTextBox1.Location = new System.Drawing.Point(26, 255);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(182, 139);
+            this.richTextBox1.Size = new System.Drawing.Size(388, 139);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(226, 57);
+            this.label3.Location = new System.Drawing.Point(23, 239);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 13);
             this.label3.TabIndex = 10;
             this.label3.Text = "Description of Issue";
+            // 
+            // ProjectListBox
+            // 
+            this.ProjectListBox.FormattingEnabled = true;
+            this.ProjectListBox.Location = new System.Drawing.Point(26, 89);
+            this.ProjectListBox.Name = "ProjectListBox";
+            this.ProjectListBox.Size = new System.Drawing.Size(191, 134);
+            this.ProjectListBox.TabIndex = 11;
+            this.ProjectListBox.SelectedIndexChanged += new System.EventHandler(this.ProjectListBox_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(23, 51);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(76, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "List of Projects\r\n";
             // 
             // MainForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(636, 416);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.ProjectListBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.checkedListBox1);
+            this.Controls.Add(this.IssueListBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.statusStrip1);
@@ -210,9 +231,11 @@
         private System.ComponentModel.BackgroundWorker RLogin;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckedListBox IssueListBox;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListBox ProjectListBox;
+        private System.Windows.Forms.Label label4;
     }
 }
 
