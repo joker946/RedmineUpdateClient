@@ -116,6 +116,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RedmineClientStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="RedmineClientStrings.ru-RU.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RedmineClientStrings.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,7 +152,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>RedmineClientStrings1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="RedmineClientStrings.ru-RU.resx" />
+    <EmbeddedResource Include="RedmineClientStrings.ru-RU.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RedmineClientStrings.ru-RU.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -160,9 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

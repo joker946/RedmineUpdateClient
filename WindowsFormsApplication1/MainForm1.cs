@@ -35,6 +35,7 @@ namespace WindowsFormsApplication1
         int countofissues;
         int selectedItem;
         ResourceManager LocRM;
+        bool isUpdateAllow;
         public MainForm1()
         {
             InitializeComponent();
@@ -46,6 +47,7 @@ namespace WindowsFormsApplication1
             LocRM = new ResourceManager("RedmineUpdateMain.RedmineClientMFStrings", GetType().Assembly);
             countofissues = 0;
             selectedItem = 0;
+            isUpdateAllow = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -54,9 +56,24 @@ namespace WindowsFormsApplication1
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            RUpdateIssue.RunWorkerAsync();
+            if (isUpdateAllow)
+            {
+                RUpdateIssue.RunWorkerAsync();
+                isUpdateAllow = false;
+            }
+            else
+            {
+                if (RUpdateIssue.IsBusy)
+                {
+                    isUpdateAllow = false;
+                }
+                else
+                {
+                    isUpdateAllow = true;
+                }
+            }
+                                                                     
         }
-        
         private void MainForm1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
@@ -80,71 +97,71 @@ namespace WindowsFormsApplication1
         }
         private void RUpdateIssue_OnWork(object sender, DoWorkEventArgs e)
         {
-            client.Total = client.GetUpdatedTotal();
+            client.TotalIssue = client.GetTotalIssue();
 
         }
         private void RUpdateIssue_OnComplete(object sender, RunWorkerCompletedEventArgs e)
         {
             checkedListBox1.Items.Clear();
             
-            for (int i = 0; i < client.Total.Count; i++)
+            for (int i = 0; i < client.TotalIssue.Count; i++)
             {
-                checkedListBox1.Items.Add(client.Total[i].Subject.ToString());
+                checkedListBox1.Items.Add(client.TotalIssue[i].Subject.ToString());
             }
             if (countofissues == 0)
             {
                 checkedListBox1.SetSelected(selectedItem, true);
-                countofissues = client.Total.Count;
+                countofissues = client.TotalIssue.Count;
             }
-            else if (countofissues < client.Total.Count){
-                int dif = client.Total.Count - countofissues;
+            else if (countofissues < client.TotalIssue.Count){
+                int dif = client.TotalIssue.Count - countofissues;
                 checkedListBox1.SetSelected(selectedItem + dif, true);
-                countofissues = client.Total.Count;
+                countofissues = client.TotalIssue.Count;
             }
-            else if (countofissues == client.Total.Count)
+            else if (countofissues == client.TotalIssue.Count)
             {
                 checkedListBox1.SetSelected(selectedItem, true);
             }
-            for (int i = 0; i < client.Cache.Count; i++)
+            for (int i = 0; i < client.CacheIssue.Count; i++)
             {
-                if (client.Total[i].Id != client.Cache[i].Id)
+                if (client.TotalIssue[i].Id != client.CacheIssue[i].Id)
                 {
-                    ShowIcon(String.Format(LocRM.GetString("MFChangesinProj"), client.Total[i].Project.Name), 
-                        String.Format(LocRM.GetString("MFAddedIssue"), client.Total[i].Subject));
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinProj"), client.TotalIssue[i].Project.Name), 
+                        String.Format(LocRM.GetString("MFAddedIssue"), client.TotalIssue[i].Subject));
                     break;
                 }
-                if (client.Total[i].Description != client.Cache[i].Description)
+                if (client.TotalIssue[i].Description != client.CacheIssue[i].Description)
                 {
-                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject), 
-                        String.Format(LocRM.GetString("MFCDisc"), client.Total[i].Description));
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.TotalIssue[i].Subject), 
+                        String.Format(LocRM.GetString("MFCDisc"), client.TotalIssue[i].Description));
                 }
-                if (client.Total[i].Subject != client.Cache[i].Subject)
+                if (client.TotalIssue[i].Subject != client.CacheIssue[i].Subject)
                 {
-                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject), 
-                        String.Format(LocRM.GetString("MFCSubj"), client.Cache[i].Subject, client.Total[i].Subject));
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.TotalIssue[i].Subject), 
+                        String.Format(LocRM.GetString("MFCSubj"), client.CacheIssue[i].Subject, client.TotalIssue[i].Subject));
                 }
-                if (client.Total[i].Status.Name != client.Cache[i].Status.Name)
+                if (client.TotalIssue[i].Status.Name != client.CacheIssue[i].Status.Name)
                 {
-                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject), 
-                        String.Format(LocRM.GetString("MFCStat"), client.Cache[i].Status.Name, client.Total[i].Status.Name));
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.TotalIssue[i].Subject), 
+                        String.Format(LocRM.GetString("MFCStat"), client.CacheIssue[i].Status.Name, client.TotalIssue[i].Status.Name));
                 }
-                if (client.Total[i].Priority.Name != client.Cache[i].Priority.Name)
+                if (client.TotalIssue[i].Priority.Name != client.CacheIssue[i].Priority.Name)
                 {
-                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject),
-                        String.Format(LocRM.GetString("MFCPrior"), client.Cache[i].Priority.Name, client.Total[i].Priority.Name));
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.TotalIssue[i].Subject),
+                        String.Format(LocRM.GetString("MFCPrior"), client.CacheIssue[i].Priority.Name, client.TotalIssue[i].Priority.Name));
                 }
-                if (client.Total[i].Tracker.Name != client.Cache[i].Tracker.Name)
+                if (client.TotalIssue[i].Tracker.Name != client.CacheIssue[i].Tracker.Name)
                 {
-                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject),
-                        String.Format(LocRM.GetString("MFCTrck"), client.Cache[i].Tracker.Name, client.Total[i].Tracker.Name));
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.TotalIssue[i].Subject),
+                        String.Format(LocRM.GetString("MFCTrck"), client.CacheIssue[i].Tracker.Name, client.TotalIssue[i].Tracker.Name));
                 }
-                if (client.Total[i].DoneRatio.Value != client.Cache[i].DoneRatio.Value)
+                if (client.TotalIssue[i].DoneRatio.Value != client.CacheIssue[i].DoneRatio.Value)
                 {
-                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.Total[i].Subject),
-                        String.Format(LocRM.GetString("MFCRatio"), client.Cache[i].DoneRatio.Value, client.Total[i].DoneRatio.Value));
+                    ShowIcon(String.Format(LocRM.GetString("MFChangesinIssue"), client.TotalIssue[i].Subject),
+                        String.Format(LocRM.GetString("MFCRatio"), client.CacheIssue[i].DoneRatio.Value, client.TotalIssue[i].DoneRatio.Value));
                 }
             }
-            client.Cache = client.Total;
+            client.CacheIssue = client.TotalIssue;
         }
 
         private void RLogin_DoWork(object sender, DoWorkEventArgs e)
@@ -184,7 +201,7 @@ namespace WindowsFormsApplication1
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            richTextBox1.Text = client.Total[checkedListBox1.SelectedIndex].Description.ToString();
+            richTextBox1.Text = client.TotalIssue[checkedListBox1.SelectedIndex].Description.ToString();
             selectedItem = checkedListBox1.SelectedIndex;
         }
     }

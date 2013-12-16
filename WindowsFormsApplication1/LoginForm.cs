@@ -20,8 +20,14 @@ namespace WindowsFormsApplication1
     {
         public LoginForm()
         {
-            
-            //System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("ru-RU");
+            switch (RedmineUpdateMain.Properties.Settings.Default.Language){
+                case "en":
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("en");
+                    break;
+                case "ru":
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("ru-RU");
+                    break;
+            }
             InitializeComponent();
 
         }
@@ -38,6 +44,7 @@ namespace WindowsFormsApplication1
             label1.Text = LocRM.GetString("LoginLabel");
             label2.Text = LocRM.GetString("PasswordLabel");
             label3.Text = LocRM.GetString("HostLabel");
+            checkBox1.Text = LocRM.GetString("EditHostBox");
             TitleLabel.Text = LocRM.GetString("TitleLabel");
             button1.Text = LocRM.GetString("LoginButton");
             /*Assembly ass = Assembly.GetExecutingAssembly();
