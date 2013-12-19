@@ -121,6 +121,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RedmineClientStrings.ru-RU.resx</DependentUpon>
     </Compile>
+    <Compile Include="RedmineClientMFStrings.ru-RU.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RedmineClientMFStrings.ru-RU.resx</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
@@ -155,6 +160,10 @@
     <EmbeddedResource Include="RedmineClientStrings.ru-RU.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>RedmineClientStrings.ru-RU.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RedmineClientMFStrings.ru-RU.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RedmineClientMFStrings.ru-RU.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>

@@ -47,6 +47,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.ProjectListBox = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +60,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(220, 51);
+            this.label1.Location = new System.Drawing.Point(220, 64);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 13);
             this.label1.TabIndex = 3;
@@ -130,15 +131,15 @@
             // 
             this.listBox2.FormattingEnabled = true;
             this.listBox2.HorizontalScrollbar = true;
-            this.listBox2.Location = new System.Drawing.Point(420, 89);
+            this.listBox2.Location = new System.Drawing.Point(223, 255);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(196, 303);
+            this.listBox2.Size = new System.Drawing.Size(205, 134);
             this.listBox2.TabIndex = 6;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(417, 51);
+            this.label2.Location = new System.Drawing.Point(220, 239);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 13);
             this.label2.TabIndex = 7;
@@ -149,22 +150,22 @@
             this.IssueListBox.FormattingEnabled = true;
             this.IssueListBox.Location = new System.Drawing.Point(223, 89);
             this.IssueListBox.Name = "IssueListBox";
-            this.IssueListBox.Size = new System.Drawing.Size(191, 139);
+            this.IssueListBox.Size = new System.Drawing.Size(205, 139);
             this.IssueListBox.TabIndex = 8;
             this.IssueListBox.SelectedIndexChanged += new System.EventHandler(this.IssueListBox1_SelectedIndexChanged);
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(26, 255);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 255);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(388, 139);
+            this.richTextBox1.Size = new System.Drawing.Size(205, 139);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(23, 239);
+            this.label3.Location = new System.Drawing.Point(12, 239);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 13);
             this.label3.TabIndex = 10;
@@ -173,26 +174,37 @@
             // ProjectListBox
             // 
             this.ProjectListBox.FormattingEnabled = true;
-            this.ProjectListBox.Location = new System.Drawing.Point(26, 89);
+            this.ProjectListBox.Location = new System.Drawing.Point(12, 89);
             this.ProjectListBox.Name = "ProjectListBox";
-            this.ProjectListBox.Size = new System.Drawing.Size(191, 134);
+            this.ProjectListBox.Size = new System.Drawing.Size(205, 134);
             this.ProjectListBox.TabIndex = 11;
             this.ProjectListBox.SelectedIndexChanged += new System.EventHandler(this.ProjectListBox_SelectedIndexChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(23, 51);
+            this.label4.Location = new System.Drawing.Point(12, 64);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(76, 13);
             this.label4.TabIndex = 12;
             this.label4.Text = "List of Projects\r\n";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(349, 229);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(79, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "Update Issue";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(636, 416);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.ProjectListBox);
             this.Controls.Add(this.label3);
@@ -236,6 +248,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox ProjectListBox;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
     }
 }
 

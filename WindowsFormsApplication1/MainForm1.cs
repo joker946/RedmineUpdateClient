@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using System.Collections;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -17,6 +18,11 @@ using System.Resources;
 
 namespace WindowsFormsApplication1
 {
+    enum Redmine
+    {
+        SelectedIndexofProject,
+        SelectedIndexofIssue
+    }
     public struct teststruct
     {
         public string login;
@@ -33,8 +39,10 @@ namespace WindowsFormsApplication1
     {
         Client client;
         int countofissues;
-        int selectedItem;
         ResourceManager LocRM;
+        Dictionary<Redmine, int> dict;
+        bool FirstTimeLaunchProcess;
+        int SelProj, SelIssue;
         public MainForm1()
         {
             InitializeComponent();
@@ -45,11 +53,17 @@ namespace WindowsFormsApplication1
             RLogin.RunWorkerAsync(new teststruct(login,password,host));
             LocRM = new ResourceManager("RedmineUpdateMain.RedmineClientMFStrings", GetType().Assembly);
             countofissues = 0;
-            selectedItem = 0;
+            FirstTimeLaunchProcess = true;
+            SelProj = 0;
+            SelIssue = 0;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            label1.Text = LocRM.GetString("MFLoI");
+            label2.Text = LocRM.GetString("MFRecents");
+            label3.Text = LocRM.GetString("MFDoI");
+            label4.Text = LocRM.GetString("MFProjects");
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -85,29 +99,20 @@ namespace WindowsFormsApplication1
         {
             ProjectListBox.Enabled = false;
             IssueListBox.Enabled = false;
+            if (!FirstTimeLaunchProcess)
+            {
+                SelProj = ProjectListBox.SelectedIndex;
+                SelIssue = IssueListBox.SelectedIndex;
+            }
             IssueListBox.Items.Clear();
             ProjectListBox.Items.Clear();
             for (int i = client.TotalProject.Count-1; i >= 0; i--)
             {
                 ProjectListBox.Items.Add(client.TotalProject[i].Name);
             }
-            for (int i = 0; i < client.Project[0].Count; i++)
+            for (int i = 0; i < client.Project[SelProj].Count; i++)
             {
-                IssueListBox.Items.Add(client.Project[0][i].Subject.ToString());
-            }
-            if (countofissues == 0)
-            {
-                IssueListBox.SetSelected(selectedItem, true);
-                countofissues = client.TotalIssue.Count;
-            }
-            else if (countofissues < client.TotalIssue.Count){
-                int dif = client.TotalIssue.Count - countofissues;
-                IssueListBox.SetSelected(selectedItem + dif, true);
-                countofissues = client.TotalIssue.Count;
-            }
-            else if (countofissues == client.TotalIssue.Count)
-            {
-                IssueListBox.SetSelected(selectedItem, true);
+                IssueListBox.Items.Add(client.Project[SelProj][i].Subject.ToString());
             }
             #region Checkers_for_Notify
             for (int i = 0; i < client.CacheIssue.Count; i++)
@@ -153,6 +158,9 @@ namespace WindowsFormsApplication1
             client.CacheIssue = client.TotalIssue;
             ProjectListBox.Enabled = true;
             IssueListBox.Enabled = true;
+            FirstTimeLaunchProcess = false;
+            ProjectListBox.SelectedIndex = SelProj;
+            IssueListBox.SelectedIndex = SelIssue;
         }
         #region Thread_on_start
         private void RLogin_DoWork(object sender, DoWorkEventArgs e)
@@ -193,7 +201,6 @@ namespace WindowsFormsApplication1
         private void IssueListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             richTextBox1.Text = client.TotalIssue[IssueListBox.SelectedIndex].Description.ToString();
-            selectedItem = IssueListBox.SelectedIndex;
         }
 
         private void ProjectListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -202,6 +209,21 @@ namespace WindowsFormsApplication1
             for (int i = 0; i < client.Project[ProjectListBox.SelectedIndex].Count; i++)
             {
                 IssueListBox.Items.Add(client.Project[ProjectListBox.SelectedIndex][i].Subject);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (object checkedItem in IssueListBox.CheckedItems)
+            {
+                for (int i = 0; i < client.Project[SelProj].Count; i++)
+                {
+                    if (checkedItem.ToString() == client.Project[SelProj][i].Subject.ToString())
+                    {
+                        client.Project[SelProj][i].Status.Id = 5;
+                        client.Manager.UpdateObject(client.Project[SelProj][i].Id.ToString(), client.Project[SelProj][i]);
+                    }
+                }
             }
         }
     }

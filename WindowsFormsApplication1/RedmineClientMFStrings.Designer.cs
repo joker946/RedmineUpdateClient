@@ -151,11 +151,47 @@ namespace RedmineUpdateMain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description of Issue.
+        /// </summary>
+        internal static string MFDoI {
+            get {
+                return ResourceManager.GetString("MFDoI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are logged in as {0} {1}.
         /// </summary>
         internal static string MFLogInfo {
             get {
                 return ResourceManager.GetString("MFLogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Issues.
+        /// </summary>
+        internal static string MFLoI {
+            get {
+                return ResourceManager.GetString("MFLoI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Projects.
+        /// </summary>
+        internal static string MFProjects {
+            get {
+                return ResourceManager.GetString("MFProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recent Updates.
+        /// </summary>
+        internal static string MFRecents {
+            get {
+                return ResourceManager.GetString("MFRecents", resourceCulture);
             }
         }
     }

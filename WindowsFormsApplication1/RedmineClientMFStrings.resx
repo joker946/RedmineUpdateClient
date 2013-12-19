@@ -150,4 +150,16 @@
   <data name="MFLogInfo" xml:space="preserve">
     <value>You are logged in as {0} {1}</value>
   </data>
+  <data name="MFDoI" xml:space="preserve">
+    <value>Description of Issue</value>
+  </data>
+  <data name="MFLoI" xml:space="preserve">
+    <value>List of Issues</value>
+  </data>
+  <data name="MFProjects" xml:space="preserve">
+    <value>List of Projects</value>
+  </data>
+  <data name="MFRecents" xml:space="preserve">
+    <value>Recent Updates</value>
+  </data>
 </root>
